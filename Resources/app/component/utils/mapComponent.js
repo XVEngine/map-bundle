@@ -79,11 +79,11 @@
     namespace.mapComponent.prototype.getElement = function() {
         var self = this;
 
-        return app.services.ui.jsLoader.load(self.params.leafletLibs).then(function(){
-            return app.services.ui.cssLoader.load(self.params.leafletLibCss);
+        return app.service.ui.jsLoader.load(self.params.leafletLibs).then(function(){
+            return app.service.ui.cssLoader.load(self.params.leafletLibCss);
         }).then(function(){
             self.leaflet = L;
-            return app.services.api.google.maps.getApi();
+            return app.service.api.google.maps.getApi();
         }).then(function(){
             setTimeout(function(){
                 self.init2();
