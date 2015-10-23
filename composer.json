@@ -1,0 +1,19 @@
+{
+    "name": "xvengine/map-bundle",
+    "description": "Map Bundle",
+    "authors": [
+        {
+            "name": "Krzysztof Bednarczyk",
+            "email": "admin@bordeux.net",
+            "homepage": "http://bednarczyk.me"
+        }
+    ],
+    "require": {
+		"xvengine/core": "1.*"
+	},
+    "autoload": {
+        "psr-0": {
+            "XVEngine\\Bundle\\MapBundle" : ""
+        }
+    }
+}
