@@ -3,7 +3,7 @@
 
     namespace.point = app.newClass({
         extend: function () {
-            return app.components.utils.map.abstract.elementAbstract;
+            return app.component.utils.map.abstract.elementAbstract;
         }
     });
 
