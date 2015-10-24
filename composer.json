@@ -1,6 +1,7 @@
 {
     "name": "xvengine/map-bundle",
     "description": "Map Bundle",
+	"type" : "xvengine-bundle",
     "authors": [
         {
             "name": "Krzysztof Bednarczyk",
