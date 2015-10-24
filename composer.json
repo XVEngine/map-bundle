@@ -16,5 +16,6 @@
         "psr-0": {
             "XVEngine\\Bundle\\MapBundle" : ""
         }
-    }
+    },
+    "target-dir": "XVEngine/Bundle/MapBundle"
 }
