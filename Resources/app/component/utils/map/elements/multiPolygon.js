@@ -25,6 +25,9 @@
         return this;
     };
 
+    namespace.multiPolygon.prototype._getObj = function(points, options){
+        return this.getLeaflet().multiPolygon(points, options);
+    };
 
     namespace.multiPolygon.prototype._add = function(element){
         if(this.has(element.id)){
@@ -39,10 +42,7 @@
             options.title = element.title;
         }
 
-        var obj = this.getLeaflet().multiPolygon(
-                element.points,
-            options);
-
+        var obj = this._getObj(element.points, options);
 
         obj.on("click", function(){
             self.triggerFromEvents(element.events, "onClick");
