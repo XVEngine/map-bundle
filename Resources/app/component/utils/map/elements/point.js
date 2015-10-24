@@ -12,13 +12,13 @@
         this.clusters = {};
     };
 
-    namespace.point.prototype.add = function(point){
-        if(!point.forEach){
-            return this._add(point);
+    namespace.point.prototype.add = function(element){
+        if(!element.forEach){
+            return this._add(element);
         }
 
         var self = this;
-        point.forEach(function(p){
+        element.forEach(function(p){
             self._add(p);
         });
 
@@ -26,44 +26,44 @@
     };
 
 
-    namespace.point.prototype._add = function(point){
-        if(this.has(point.id)){
+    namespace.point.prototype._add = function(element){
+        if(this.has(element.id)){
             return this;
         }
 
 
         var self = this;
-        var options = point.customOptions || {};
+        var options = element.customOptions || {};
 
-        if(point.title){
-            options.title = point.title;
+        if(element.title){
+            options.title = element.title;
         }
 
-        if(point.icon){
-            options.icon = this.getLeaflet()[point.icon.type === "div" ? "divIcon" : "icon"](point.icon);
+        if(element.icon){
+            options.icon = this.getLeaflet()[element.icon.type === "div" ? "divIcon" : "icon"](element.icon);
         }
 
-        var marker = this.getLeaflet().marker({
-            lat: point.lat,
-            lng: point.lng
+        var obj = this.getLeaflet().marker({
+            lat: element.lat,
+            lng: element.lng
         }, options);
 
 
-        marker.on("click", function(){
-            self.triggerFromEvents(point.events, "onClick");
+        obj.on("click", function(){
+            self.triggerFromEvents(element.events, "onClick");
         });
 
 
-        if(point.cluster){
-            this.getCluster(point.cluster).addLayer(marker);
+        if(element.cluster){
+            this.getCluster(element.cluster).addLayer(obj);
         }else{
-            marker.addTo(this.getMap());
+            obj.addTo(this.getMap());
         }
 
-        marker.addTo(this.getMap());
-        point["obj"] = marker;
-        point.hidden = false;
-        this.addElement(point);
+        obj.addTo(this.getMap());
+        element["obj"] = obj;
+        element.hidden = false;
+        this.addElement(element);
         return true;
     };
 

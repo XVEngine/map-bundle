@@ -121,5 +121,4 @@ class MapComponent extends AbstractComponent
 
 
 
-
 }
