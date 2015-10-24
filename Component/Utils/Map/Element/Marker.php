@@ -13,11 +13,11 @@ use JsonSerializable;
 
 
 /**
- * Class Point
+ * Class Marker
  * @author Krzysztof Bednarczyk
  * @package XVEngine\Bundle\ComponentsBundle\Component\Utils\Map
  */
-class Point  extends AbstractElement
+class Marker  extends AbstractElement
 {
 
     /**

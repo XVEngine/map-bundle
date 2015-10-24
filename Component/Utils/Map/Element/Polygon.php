@@ -10,5 +10,5 @@ namespace XVEngine\Bundle\MapBundle\Component\Utils\Map\Element;
  */
 class Polygon extends MultiPolygon
 {
-    
+
 }

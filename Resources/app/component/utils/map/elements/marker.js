@@ -1,18 +1,18 @@
 (function(namespace, app, globals) {
 
 
-    namespace.point = app.newClass({
+    namespace.marker = app.newClass({
         extend: function () {
             return app.component.utils.map.abstract.elementAbstract;
         }
     });
 
 
-    namespace.point.prototype.init = function(){
+    namespace.marker.prototype.init = function(){
         this.clusters = {};
     };
 
-    namespace.point.prototype.add = function(element){
+    namespace.marker.prototype.add = function(element){
         if(!element.forEach){
             return this._add(element);
         }
@@ -26,7 +26,7 @@
     };
 
 
-    namespace.point.prototype._add = function(element){
+    namespace.marker.prototype._add = function(element){
         if(this.has(element.id)){
             return this;
         }
@@ -68,7 +68,7 @@
     };
 
 
-    namespace.point.prototype.getCluster = function (name) {
+    namespace.marker.prototype.getCluster = function (name) {
         if (this.clusters[name]) {
             return this.clusters[name]
         }
@@ -80,7 +80,7 @@
                     return self.getLeaflet().divIcon({
                         html: '<b>' + cluster.getChildCount() + '</b>',
                         iconSize: [40, 40],
-                        className: "map-cluster-point"
+                        className: "map-cluster-marker"
                     });
                 }
             });
@@ -91,13 +91,13 @@
     };
 
 
-    namespace.point.prototype._delete = function(element){
+    namespace.marker.prototype._delete = function(element){
         element.cluster && this.getCluster(element.cluster).addLayer(element.obj);
         element.obj && this.getMap().removeLayer(element.obj);
         return true;
     };
 
-    namespace.point.prototype._hide = function(element){
+    namespace.marker.prototype._hide = function(element){
         if(element.hidden){
             return true;
         }
@@ -110,7 +110,7 @@
         return true;
     };
 
-    namespace.point.prototype._show = function(element){
+    namespace.marker.prototype._show = function(element){
         if(!element.hidden){
             return true;
         }
@@ -123,5 +123,7 @@
         }
         return true;
     };
-    return namespace.point;
+
+
+    return namespace.marker;
 })(__ARGUMENT_LIST__);
