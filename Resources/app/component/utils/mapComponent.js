@@ -294,7 +294,7 @@
         }
 
 
-        this.elements[element][method].apply(
+        return this.elements[element][method].apply(
             this.elements[element],
             Array.prototype.splice.call(arguments, 2)
         );

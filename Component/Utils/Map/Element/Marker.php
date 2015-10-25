@@ -9,9 +9,6 @@
 namespace XVEngine\Bundle\MapBundle\Component\Utils\Map\Element;
 
 
-use JsonSerializable;
-
-
 /**
  * Class Marker
  * @author Krzysztof Bednarczyk

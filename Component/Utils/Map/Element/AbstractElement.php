@@ -18,7 +18,7 @@ use XVEngine\Core\Component\Events;
  * @author Krzysztof Bednarczyk
  * @package XVEngine\Bundle\ComponentsBundle\Component\Utils\Map
  */
-abstract class AbstractElement  extends Events implements  JsonSerializable
+abstract class AbstractElement  extends Events implements JsonSerializable
 {
 
     /**

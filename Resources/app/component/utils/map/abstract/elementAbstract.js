@@ -102,23 +102,62 @@
 
 
 
+
     namespace.elementAbstract.prototype.findByTag = function(tagName){
         var elements = {};
         var self = this;
+
+        var y = null;
+        var i = null;
+        var el = null;
+        var result = null;
+        var name = null;
+        var negation = null;
+        var isInTags = null;
+        var tag = null;
 
         if(!tagName.forEach){
             tagName = [tagName];
         }
 
-        var el = null;
+        for(i in tagName){
+            result = tagName[i].split(/[\s,]+/);
+
+            for(y in result){
+                name = result[y];
+                negation = false;
+
+                if(name[0] === "!"){
+                    negation = true;
+                    name = name.substr(1);
+                }
+
+                result[y] = {
+                    "tag" : name,
+                    "negation" : negation
+                };
+
+            }
+
+            tagName[i] = result;
+        }
+
+
         Object.keys(this.elements).forEach(function(id){
             el = self.elements[id];
-
             for(var i in tagName){
-                if(el.tags.indexOf(tagName[i]) !== -1){
-                    elements[id] = el;
-                    break;
+                result = true;
+                for (y = 0; y < tagName[i].length; y++) {
+                    tag = tagName[i][y];
+                    isInTags = el.tags.indexOf(tag.tag) !== -1;
+
+                    result = tag.negation ?  !isInTags : isInTags;
+                    if(!result){
+                        break;
+                    }
                 }
+
+                result && (elements[id] = el);
             }
 
         });
@@ -257,6 +296,43 @@
         return this;
     };
 
+
+    /**
+     *
+     * @returns {$}
+     */
+    namespace.elementAbstract.prototype.setStyle = function(id, options) {
+        var el = this.get(id);
+        if(!el){
+            return false;
+        }
+
+        this._setStyle(this.elements[id], options);
+        return this;
+    };
+
+
+    namespace.elementAbstract.prototype._setStyle = function(element, options) {
+        element["obj"].setStyle(options);
+        return true;
+    };
+
+
+    /**
+     *
+     * @returns {$}
+     */
+    namespace.elementAbstract.prototype.setStyleByTag = function(tagName, options) {
+        var self = this;
+
+
+        var elements = this.findByTag(tagName);
+        Object.keys(elements).forEach(function(id){
+            self.setStyle(elements[id].id, options);
+        });
+
+        return this;
+    };
 
 
     namespace.elementAbstract.prototype.triggerFromEvents  = function(events, eventName){
