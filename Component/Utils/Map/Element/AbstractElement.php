@@ -29,7 +29,7 @@ abstract class AbstractElement  extends Events implements  JsonSerializable
     /**
      * @var string[]
      */
-    protected $tags;
+    protected $tags = [];
 
     /**
      * @var string

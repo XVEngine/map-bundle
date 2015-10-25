@@ -8,7 +8,11 @@
 
 namespace XVEngine\Bundle\MapBundle\Component\Utils\Map\Element;
 
-
+/**
+ * Class Path
+ * @author Krzysztof Bednarczyk
+ * @package XVEngine\Bundle\MapBundle\Component\Utils\Map\Element
+ */
 class Path  extends AbstractElement
 {
 
