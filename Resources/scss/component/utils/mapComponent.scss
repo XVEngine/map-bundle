@@ -18,7 +18,7 @@ xv-map {
       &.right-panel {
         right:0;
         > div {
-          > a {
+          > .toggle a {
             > i{
               transform: rotateY(180deg);
             }
@@ -49,6 +49,7 @@ xv-map {
       position: absolute;
       top: 0;
       right: -$panel-width;
+      will-change: right;
       bottom: 0;
       background: $background-color;
       z-index: 5;
@@ -63,24 +64,35 @@ xv-map {
         height: 100%;
         width: 100%;
 
-        > a {
-          width: $toggle-size;
+        > .toggle {
           height: $toggle-size;
-          display:block;
           position: absolute;
-          background: $main-color;
-          left: -$toggle-size + 1px;
-          color: $main-color2;
-          font-size: 30px;
-          text-align: center;
-          border-right: 0;
-          box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.5);
+          right: 100%;
+          display: flex;
 
-          > i {
-            display: inline-block;
-            transition: all $animation-speed ease;
-            &:before{
-              line-height: $toggle-size;
+          > .breadcrumb {
+            height: 100%;
+          }
+
+
+          > a {
+            flex: none;
+            display: block;
+            width: $toggle-size;
+            height: 100%;
+            background: $main-color;
+            color: $main-color2;
+            font-size: 30px;
+            text-align: center;
+            border-right: 0;
+            box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.5);
+
+            > i {
+              display: inline-block;
+              transition: all $animation-speed ease;
+              &:before{
+                line-height: $toggle-size;
+              }
             }
           }
         }

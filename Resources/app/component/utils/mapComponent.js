@@ -24,9 +24,15 @@
                         </div>
                         <div class="right-panel">
                             <div>
-                                <a href="#" class="toggle">
-                                    <i class="icon icon-arrow-left"></i>
-                                </a>
+                                <div class="toggle">
+                                    <div class="breadcrumb">
+
+                                    </div>
+                                    <a href="#">
+                                        <i class="icon icon-arrow-left"></i>
+                                    </a>
+                                </div>
+
 
                                 <div class="content">
 
@@ -103,6 +109,7 @@
 
         this.$rightPanel = this.$element.find("> div.right-panel");
         this.$map = this.$element.find("> div.map");
+        this.$breadcrumb = this.$element.find("> .right-panel > div > .toggle > div.breadcrumb");
 
         this.$mapContainer = this.$map.find(" > div.container");
         this.$mapContainer.attr("id", app.utils.getRandomString(10));
@@ -129,8 +136,10 @@
         this.params.tiles && this.setTiles(this.params.tiles);
         this.params.miniMap && this.setMiniMap(this.params.miniMap.tile, this.params.miniMap.options);
         this.params.rightPanelComponent && this.setRightPanelComponent(this.params.rightPanelComponent);
+        this.params.breadCrumbComponent && this.setBreadCrumbComponent(this.params.breadCrumbComponent);
         this.initEvents();
         this.trigger("onMapReady");
+
     };
 
 
@@ -209,7 +218,7 @@
         });
 
 
-        this.$rightPanel.find(".toggle:first").on("click", function () {
+        this.$rightPanel.find(".toggle > a:first").on("click", function () {
             self.$element.toggleClass("panel-show");
             return false;
         });
@@ -306,6 +315,14 @@
         var self = this;
         return app.utils.buildComponent(component).then(function($html){
             self.$rightPanel.find(".content:first").html($html);
+            return true;
+        });
+    };
+
+    namespace.mapComponent.prototype.setBreadCrumbComponent  = function(component){
+        var self = this;
+        return app.utils.buildComponent(component).then(function($html){
+            self.$breadcrumb.html($html);
             return true;
         });
     };

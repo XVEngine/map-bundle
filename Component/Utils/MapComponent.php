@@ -119,6 +119,15 @@ class MapComponent extends AbstractComponent
         return $this->setParam("rightPanelComponent", $component);
     }
 
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param AbstractComponent|null $component
+     * @return $this
+     */
+    public function setBreadCrumbComponent(AbstractComponent $component = null){
+        return $this->setParam("breadCrumbComponent", $component);
+    }
+
 
 
 }
