@@ -10,6 +10,7 @@
 
     namespace.marker.prototype.init = function(){
         this.clusters = {};
+        this.cluterOptions = {};
     };
 
     namespace.marker.prototype.add = function(element){
@@ -25,6 +26,27 @@
         return this;
     };
 
+
+    namespace.marker.prototype.setClusterOptions = function(clusterName, options){
+        if(this.cluterOptions[clusterName]){
+            this.cluterOptions[clusterName] = {
+                "template" : "{0}"
+            };
+        }
+
+        this.cluterOptions[clusterName] = $.extend( true, this.cluterOptions[clusterName], options );
+        return this;
+    };
+
+
+    namespace.marker.prototype.getClusterOptions = function(clusterName){
+        if(this.cluterOptions[clusterName]){
+            return this.cluterOptions[clusterName];
+        }
+
+        this.setClusterOptions(clusterName, {});
+        return this.cluterOptions[clusterName];
+    };
 
     namespace.marker.prototype._add = function(element){
         if(this.has(element.id)){
@@ -60,7 +82,6 @@
             obj.addTo(this.getMap());
         }
 
-        obj.addTo(this.getMap());
         element["obj"] = obj;
         element.hidden = false;
         this.addElement(element);
@@ -73,12 +94,21 @@
             return this.clusters[name]
         }
         var self = this;
+
         var cluster = this.getLeaflet()
             .markerClusterGroup({
                 spiderfyDistanceMultiplier: 2,
                 iconCreateFunction: function (cluster) {
+                    var value = 0;
+                    var options = self.getClusterOptions(name);
+                    cluster.getAllChildMarkers().forEach(function(marker){
+                        value += typeof marker.options.clusterValue === "undefined"
+                            ? 1 :
+                            marker.options.clusterValue;
+                    });
+
                     return self.getLeaflet().divIcon({
-                        html: '<b>' + cluster.getChildCount() + '</b>',
+                        html: '<b>' +options.template.format(Math.round(value)) + '</b>',
                         iconSize: [40, 40],
                         className: "map-cluster-marker"
                     });
@@ -92,7 +122,7 @@
 
 
     namespace.marker.prototype._delete = function(element){
-        element.cluster && this.getCluster(element.cluster).addLayer(element.obj);
+        element.cluster && this.getCluster(element.cluster).removeLayer(element.obj);
         element.obj && this.getMap().removeLayer(element.obj);
         return true;
     };

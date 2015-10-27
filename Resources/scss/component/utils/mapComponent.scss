@@ -115,13 +115,13 @@ xv-map {
       box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.44);
       background: #FFF;
 
-      &.map-cluster-point {
+      &.map-cluster-marker {
         background: $main-color2;
         color: #FFF;
         font-weight: bold;
         border-radius: 100%;
         text-align: center;
-        font-size: 20px;
+        font-size: 14px;
         line-height: 40px;
       }
     }
