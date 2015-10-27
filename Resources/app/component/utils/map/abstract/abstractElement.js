@@ -1,7 +1,7 @@
 (function(namespace, app, globals) {
 
 
-    namespace.elementAbstract = function(){
+    namespace.abstractElement = function(){
 
     };
 
@@ -11,7 +11,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.getMap = function() {
+    namespace.abstractElement.prototype.getMap = function() {
         return this.container.map;
     };
 
@@ -20,7 +20,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.getLeaflet = function() {
+    namespace.abstractElement.prototype.getLeaflet = function() {
         return this.container.leaflet;
     };
 
@@ -31,7 +31,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.setContainer = function(container) {
+    namespace.abstractElement.prototype.setContainer = function(container) {
         this.elements = {};
         this.container = container;
         return this;
@@ -43,7 +43,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.getContainer = function(container) {
+    namespace.abstractElement.prototype.getContainer = function(container) {
         return this.container;
     };
 
@@ -51,7 +51,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.init = function() {
+    namespace.abstractElement.prototype.init = function() {
         return this;
     };
 
@@ -59,7 +59,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.addElement = function(element) {
+    namespace.abstractElement.prototype.addElement = function(element) {
         if(this.elements[element.id]){
             return false;
         }
@@ -75,13 +75,13 @@
 
 
 
-    namespace.elementAbstract.prototype.has = function(id){
+    namespace.abstractElement.prototype.has = function(id){
         return !!this.elements[id];
     };
 
 
 
-    namespace.elementAbstract.prototype.get = function(id){
+    namespace.abstractElement.prototype.get = function(id){
         if(this.elements[id]){
             return this.elements[id];
         }
@@ -89,21 +89,21 @@
     };
 
 
-    namespace.elementAbstract.prototype.getAll = function(){
+    namespace.abstractElement.prototype.getAll = function(){
         return this.elements;
     };
 
 
 
 
-    namespace.elementAbstract.prototype.findById = function(id){
+    namespace.abstractElement.prototype.findById = function(id){
         return this.get(id);
     };
 
 
 
 
-    namespace.elementAbstract.prototype.findByTag = function(tagName){
+    namespace.abstractElement.prototype.findByTag = function(tagName){
         var elements = {};
         var self = this;
 
@@ -166,7 +166,7 @@
     };
 
 
-    namespace.elementAbstract.prototype.hide = function(id){
+    namespace.abstractElement.prototype.hide = function(id){
         var el = this.get(id);
         if(!el){
             return false;
@@ -177,14 +177,14 @@
     };
 
 
-    namespace.elementAbstract.prototype._hide = function(element){
+    namespace.abstractElement.prototype._hide = function(element){
         element.obj && element.obj.setMap(null);
         return true;
     };
 
 
 
-    namespace.elementAbstract.prototype.show = function(id){
+    namespace.abstractElement.prototype.show = function(id){
         var el = this.get(id);
         if(!el){
             return false;
@@ -197,14 +197,14 @@
 
 
 
-    namespace.elementAbstract.prototype._show = function(element){
+    namespace.abstractElement.prototype._show = function(element){
         element.obj && element.obj.setMap(this.getMap());
         return true;
     };
 
 
 
-    namespace.elementAbstract.prototype.hideByTag = function(tagName){
+    namespace.abstractElement.prototype.hideByTag = function(tagName){
         var self = this;
 
 
@@ -215,7 +215,7 @@
         return this;
     };
 
-    namespace.elementAbstract.prototype.hideAll = function(){
+    namespace.abstractElement.prototype.hideAll = function(){
         var self = this;
 
         var elements = this.getAll();
@@ -227,7 +227,7 @@
     };
 
 
-    namespace.elementAbstract.prototype.showByTag = function(tagName){
+    namespace.abstractElement.prototype.showByTag = function(tagName){
         var self = this;
 
         var elements = this.findByTag(tagName);
@@ -237,7 +237,7 @@
         return this;
     };
 
-    namespace.elementAbstract.prototype.showAll = function(){
+    namespace.abstractElement.prototype.showAll = function(){
         var self = this;
 
         var elements = this.getAll();
@@ -249,7 +249,7 @@
 
 
 
-    namespace.elementAbstract.prototype.delete = function(id){
+    namespace.abstractElement.prototype.delete = function(id){
         var el = this.get(id);
         if(!el){
             return false;
@@ -260,12 +260,12 @@
     };
 
 
-    namespace.elementAbstract.prototype._delete = function(element){
+    namespace.abstractElement.prototype._delete = function(element){
         element.obj && element.obj.setMap(null);
     };
 
 
-    namespace.elementAbstract.prototype.deleteByTag = function(tagName){
+    namespace.abstractElement.prototype.deleteByTag = function(tagName){
         var self = this;
 
 
@@ -278,7 +278,7 @@
     };
 
 
-    namespace.elementAbstract.prototype.deleteAll = function(){
+    namespace.abstractElement.prototype.deleteAll = function(){
         var self = this;
 
         var elements = this.getAll();
@@ -292,7 +292,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.add = function() {
+    namespace.abstractElement.prototype.add = function() {
         return this;
     };
 
@@ -301,7 +301,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.setStyle = function(id, options) {
+    namespace.abstractElement.prototype.setStyle = function(id, options) {
         var el = this.get(id);
         if(!el){
             return false;
@@ -312,7 +312,7 @@
     };
 
 
-    namespace.elementAbstract.prototype._setStyle = function(element, options) {
+    namespace.abstractElement.prototype._setStyle = function(element, options) {
         element["obj"].setStyle(options);
         return true;
     };
@@ -322,7 +322,7 @@
      *
      * @returns {$}
      */
-    namespace.elementAbstract.prototype.setStyleByTag = function(tagName, options) {
+    namespace.abstractElement.prototype.setStyleByTag = function(tagName, options) {
         var self = this;
 
 
@@ -335,7 +335,7 @@
     };
 
 
-    namespace.elementAbstract.prototype.triggerFromEvents  = function(events, eventName){
+    namespace.abstractElement.prototype.triggerFromEvents  = function(events, eventName){
         var handlers = events[eventName];
         if(!handlers){
             handlers = [];
@@ -346,5 +346,5 @@
         return handlerParser.parse();
     };
 
-    return namespace.elementAbstract;
+    return namespace.abstractElement;
 })(__ARGUMENT_LIST__);

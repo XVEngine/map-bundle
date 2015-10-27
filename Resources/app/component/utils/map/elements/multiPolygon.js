@@ -3,7 +3,7 @@
 
     namespace.multiPolygon = app.newClass({
         extend: function () {
-            return app.component.utils.map.abstract.elementAbstract;
+            return app.component.utils.map.abstract.abstractElement;
         }
     });
 
