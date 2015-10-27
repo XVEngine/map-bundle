@@ -33,7 +33,7 @@
 
 
         var self = this;
-        var options = element.customOptions || {};
+        var options = element.options || {};
 
         if(element.title){
             options.title = element.title;

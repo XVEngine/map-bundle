@@ -37,6 +37,11 @@ abstract class AbstractElement  extends Events implements JsonSerializable
     protected $layer;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Point constructor.
      * @author Krzysztof Bednarczyk
      */
@@ -89,6 +94,30 @@ abstract class AbstractElement  extends Events implements JsonSerializable
         return $this;
     }
 
+    /**
+     * Get options value
+     * @author Krzysztof Bednarczyk
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Set options value
+     * @author Krzysztof Bednarczyk
+     * @param array $options
+     * @return  $this
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+
+
 
 
 
@@ -111,6 +140,8 @@ abstract class AbstractElement  extends Events implements JsonSerializable
         $data["id"] = $this->id;
         $data["tags"] = array_unique($this->tags);
         $data["events"] = $this->getEvents();
+        $data["options"] = $this->options;
+
         return $data;
     }
 }

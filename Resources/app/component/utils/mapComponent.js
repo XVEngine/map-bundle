@@ -60,6 +60,7 @@
             },
 
             topRightComponent: null,
+            showPanel : true,
             leafletLibs: [
             ],
 
@@ -113,6 +114,8 @@
 
         this.$mapContainer = this.$map.find(" > div.container");
         this.$mapContainer.attr("id", app.utils.getRandomString(10));
+        this.showPanel(this.params.showPanel);
+
 
         this.map = this.leaflet
             .map(this.$mapContainer[0], this.params.mapOptions);
@@ -219,7 +222,7 @@
 
 
         this.$rightPanel.find(".toggle > a:first").on("click", function () {
-            self.$element.toggleClass("panel-show");
+            self.showPanel(!self.isPanelShowed());
             return false;
         });
 
@@ -228,6 +231,16 @@
     /**
      *
      */
+    namespace.mapComponent.prototype.showPanel = function(value) {
+        this.$element[value ? 'addClass' : 'removeClass']("panel-show");
+        return this;
+    };
+
+       namespace.mapComponent.prototype.isPanelShowed = function() {
+        return this.$element.is(".panel-show");
+    };
+
+
     namespace.mapComponent.prototype.getBounds = function() {
         var bounds = this.map.getBounds();
 

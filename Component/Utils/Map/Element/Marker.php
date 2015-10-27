@@ -44,10 +44,6 @@ class Marker  extends AbstractElement
     protected $cluster;
 
 
-    /**
-     * @var array
-     */
-    protected $customOptions;
 
 
     /**
@@ -174,28 +170,6 @@ class Marker  extends AbstractElement
         return $this;
     }
 
-    /**
-     * Get customOptions value
-     * @author Krzysztof Bednarczyk
-     * @return array
-     */
-    public function getCustomOptions()
-    {
-        return $this->customOptions;
-    }
-
-    /**
-     * Set customOptions value
-     * @author Krzysztof Bednarczyk
-     * @param array $customOptions
-     * @return  $this
-     */
-    public function setCustomOptions($customOptions)
-    {
-        $this->customOptions = $customOptions;
-        return $this;
-    }
-
 
 
     public function export(){
@@ -205,7 +179,6 @@ class Marker  extends AbstractElement
             "title" => $this->title,
             "icon" => $this->icon,
             "cluster" => $this->cluster,
-            "customOptions" => $this->customOptions
         ];
     }
 

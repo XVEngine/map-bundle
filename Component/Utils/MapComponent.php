@@ -31,7 +31,9 @@ class MapComponent extends AbstractComponent
             "//cdn.rawgit.com/bordeux/Leaflet-MiniMap/master/dist/Control.MiniMap.min.js",
             "//cdn.rawgit.com/bordeux/Leaflet.MousePosition/master/src/L.Control.MousePosition.js",
             "//cdn.rawgit.com/bordeux/Leaflet.ZoomBox/master/L.Control.ZoomBox.js",
-            "//cdn.rawgit.com/bordeux/Leaflet.zoomslider/master/src/L.Control.Zoomslider.js"
+            "//cdn.rawgit.com/bordeux/Leaflet.zoomslider/master/src/L.Control.Zoomslider.js",
+            "//cdn.rawgit.com/bordeux/heatmap.js/master/build/heatmap.js",
+            "//cdn.rawgit.com/bordeux/heatmap.js/a567bef/plugins/leaflet-heatmap.js"
         ]);
 
         $this->setParam("leafletLibCss", [
@@ -129,5 +131,13 @@ class MapComponent extends AbstractComponent
     }
 
 
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param bool|true $value
+     * @return $this
+     */
+    protected function showPanel($value  = true){
+        return $this->setParam("showPanel", !!$value);
+    }
 
 }
