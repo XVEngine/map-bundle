@@ -3,7 +3,7 @@
 
     namespace.heatMap = app.newClass({
         extend: function () {
-            return app.component.utils.map.abstract.elementAbstract;
+            return app.component.utils.map.abstract.abstractElement;
         }
     });
 
@@ -36,14 +36,10 @@
             return this;
         }
 
-        var self = this;
         var options = element.options || {};
 
 
         var obj = this._getObj(element.data, options);
-
-
-
 
         this.getMap().addLayer(obj);
         element["obj"] = obj;
@@ -54,9 +50,23 @@
 
 
 
+
+
     namespace.heatMap.prototype._delete = function(element){
         element.obj && this.getMap().removeLayer(element.obj);
         return true;
+    };
+
+
+    namespace.heatMap.prototype.setRadiusById = function(id, radius){
+        var el = this.findById(id);
+        if(!el){
+            return this;
+        }
+
+        el.obj.cfg.radius = radius;
+        el.obj._draw();
+        return this;
     };
 
     namespace.heatMap.prototype._hide = function(element){
