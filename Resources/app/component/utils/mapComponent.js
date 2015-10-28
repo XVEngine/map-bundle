@@ -90,8 +90,6 @@
             return app.service.ui.cssLoader.load(self.params.leafletLibCss);
         }).then(function(){
             self.leaflet = L;
-            return app.service.api.google.maps.getApi();
-        }).then(function(){
             setTimeout(function(){
                 self.init2();
             }, 10);
