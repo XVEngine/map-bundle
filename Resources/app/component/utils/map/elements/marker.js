@@ -86,7 +86,7 @@
     namespace.marker.prototype.show = function(value){
         value = app.utils.ifsetor(value , true);
         this.data.cluster && this.getCluster(this.data.cluster)[value ? 'addLayer' : 'removeLayer'](this.getObject());
-        this.getLayer()[value ? 'addLayer' : 'removeLayer'](this.getObject());
+        !this.data.cluster && this.getLayer()[value ? 'addLayer' : 'removeLayer'](this.getObject());
         return this;
     };
 
