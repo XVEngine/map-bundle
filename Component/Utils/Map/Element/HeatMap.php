@@ -49,4 +49,13 @@ class HeatMap extends AbstractElement
             "data" => $this->getData()
         ];
     }
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public function getType()
+    {
+        return "heatMap";
+    }
 }

@@ -8,9 +8,5 @@
     });
 
 
-    namespace.polygon.prototype._getObj = function(points, options){
-        return this.getLeaflet().polygon(points, options);
-    };
-
     return namespace.polygon;
 })(__ARGUMENT_LIST__);

@@ -27,10 +27,6 @@ class Marker  extends AbstractElement
      */
     protected $lng;
 
-    /**
-     * @var string
-     */
-    protected $title;
 
     /**
      * @var string|array
@@ -103,50 +99,7 @@ class Marker  extends AbstractElement
         return $this;
     }
 
-    /**
-     * Get title value
-     * @author Krzysztof Bednarczyk
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
-    /**
-     * Set title value
-     * @author Krzysztof Bednarczyk
-     * @param string $title
-     * @return  $this
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-
-    /**
-     * Get icon value
-     * @author Krzysztof Bednarczyk
-     * @return array|string
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * Set icon value
-     * @author Krzysztof Bednarczyk
-     * @param array|string $icon
-     * @return  $this
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-        return $this;
-    }
 
     /**
      * Get cluster value
@@ -174,12 +127,18 @@ class Marker  extends AbstractElement
 
     public function export(){
         return [
-            "lat" => $this->lat,
-            "lng" => $this->lng,
-            "title" => $this->title,
+            "position" => [$this->lat, $this->lng],
             "icon" => $this->icon,
             "cluster" => $this->cluster,
         ];
     }
 
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public function getType()
+    {
+        return "marker";
+    }
 }

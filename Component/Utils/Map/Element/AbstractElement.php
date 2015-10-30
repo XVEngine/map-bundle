@@ -31,10 +31,12 @@ abstract class AbstractElement  extends Events implements JsonSerializable
      */
     protected $tags = [];
 
+
     /**
-     * @var string
+     * @var true
      */
-    protected $layer;
+    protected $show = true;
+
 
     /**
      * @var array
@@ -72,27 +74,8 @@ abstract class AbstractElement  extends Events implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Get layer value
-     * @author Krzysztof Bednarczyk
-     * @return string
-     */
-    public function getLayer()
-    {
-        return $this->layer;
-    }
 
-    /**
-     * Set layer value
-     * @author Krzysztof Bednarczyk
-     * @param string $layer
-     * @return  $this
-     */
-    public function setLayer($layer)
-    {
-        $this->layer = $layer;
-        return $this;
-    }
+
 
     /**
      * Get options value
@@ -117,14 +100,26 @@ abstract class AbstractElement  extends Events implements JsonSerializable
     }
 
 
-
-
-
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param bool|true $value
+     * @return $this
+     */
+    public function show($value = true){
+        $this->show = (bool) $value;
+        return $this;
+    }
 
 
 
 
     public abstract function export();
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public abstract function getType();
 
 
     /**
@@ -139,6 +134,8 @@ abstract class AbstractElement  extends Events implements JsonSerializable
         $data = $this->export();
         $data["id"] = $this->id;
         $data["tags"] = array_unique($this->tags);
+        $data["show"] = $this->show;
+        $data["type"] = $this->getType();
         $data["events"] = $this->getEvents();
         $data["options"] = $this->options;
 

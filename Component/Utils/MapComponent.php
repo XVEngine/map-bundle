@@ -3,6 +3,7 @@
 namespace XVEngine\Bundle\MapBundle\Component\Utils;
 
 
+use XVEngine\Bundle\MapBundle\Component\Utils\Map\Element\AbstractElement;
 use XVEngine\Bundle\MapBundle\Component\Utils\Map\Tile;
 use XVEngine\Core\Component\AbstractComponent;
 
@@ -18,6 +19,11 @@ class MapComponent extends AbstractComponent
      * @var Tile[]
      */
     protected $tiles = [];
+
+    /**
+     * @var array
+     */
+    protected $elements = [];
 
     public function initialize()
     {
@@ -47,6 +53,7 @@ class MapComponent extends AbstractComponent
         ]);
 
         $this->setParamByRef("tiles", $this->tiles);
+        $this->setParamByRef("elements", $this->elements);
 
     }
 
@@ -138,6 +145,22 @@ class MapComponent extends AbstractComponent
      */
     protected function showPanel($value  = true){
         return $this->setParam("showPanel", !!$value);
+    }
+
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param $layer
+     * @param AbstractElement $element
+     * @return $this
+     */
+    public function add($layer, AbstractElement $element){
+        $this->elements[] = [
+            "layeR" => $layer,
+            "element" => $element
+        ];
+
+        return $this;
     }
 
 }

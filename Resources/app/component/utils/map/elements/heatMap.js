@@ -8,84 +8,23 @@
     });
 
 
-    namespace.heatMap.prototype.init = function(){
-
-    };
-
-    namespace.heatMap.prototype.add = function(element){
-        if(!element.forEach){
-            return this._add(element);
-        }
-
-        var self = this;
-        element.forEach(function(p){
-            self._add(p);
-        });
+    namespace.heatMap.prototype.create = function(){
+        var obj = new HeatmapOverlay(this.data.options);
+        this.setObject(obj);
+        this.data.show && this.show();
 
         return this;
     };
 
-    namespace.heatMap.prototype._getObj = function(data, options){
-        var heatMap =  new HeatmapOverlay(options);
-        heatMap.setData(data);
-        return heatMap;
-    };
-
-    namespace.heatMap.prototype._add = function(element){
-        if(this.has(element.id)){
-            return this;
-        }
-
-        var options = element.options || {};
-
-
-        var obj = this._getObj(element.data, options);
-
-        this.getMap().addLayer(obj);
-        element["obj"] = obj;
-        element.hidden = false;
-        this.addElement(element);
-        return true;
-    };
-
-
-
-
-
-    namespace.heatMap.prototype._delete = function(element){
-        element.obj && this.getMap().removeLayer(element.obj);
-        return true;
-    };
-
-
-    namespace.heatMap.prototype.setRadiusById = function(id, radius){
-        var el = this.findById(id);
-        if(!el){
-            return this;
-        }
-
-        el.obj.cfg.radius = radius;
-        el.obj._draw();
+    namespace.heatMap.prototype.setData = function(data){
+        this.getObject().setData(data);
         return this;
     };
 
-    namespace.heatMap.prototype._hide = function(element){
-        if(element.hidden){
-            return true;
-        }
-        element.hidden = true;
-        this.getMap().removeLayer(element.obj);
-        return true;
-    };
-
-    namespace.heatMap.prototype._show = function(element){
-        if(!element.hidden){
-            return true;
-        }
-
-        element.hidden = false;
-        element.obj.addTo(this.getMap());
-        return true;
+    namespace.heatMap.prototype.setRadius = function( radius){
+        this.getObject().cfg.radius = radius;
+        this.getObject()._draw();
+        return this;
     };
 
 

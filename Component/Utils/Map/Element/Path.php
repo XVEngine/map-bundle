@@ -20,4 +20,13 @@ class Path  extends AbstractElement
     {
         // TODO: Implement export() method.
     }
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public function getType()
+    {
+        return "path";
+    }
 }

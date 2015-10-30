@@ -1,4 +1,4 @@
-(function(namespace, app, globals) {
+(function (namespace, app, globals) {
 
 
     namespace.mapComponent = app.newClass({
@@ -6,16 +6,14 @@
             return app.core.component.abstractComponent;
         }
     });
-    
-    
 
 
     /**
-     * 
+     *
      * @returns {$}
      */
-    namespace.mapComponent.prototype.getTemplate = function() {
-        var tmplString = app.utils.getString(function() {
+    namespace.mapComponent.prototype.getTemplate = function () {
+        var tmplString = app.utils.getString(function () {
             //@formatter:off
             /**<string>
                     <xv-map>
@@ -45,57 +43,56 @@
         });
         return $(tmplString);
     };
-    
+
 
     /**
-     * 
+     *
      * @returns {object}
      */
-    namespace.mapComponent.prototype.getDefaultParams = function() {
+    namespace.mapComponent.prototype.getDefaultParams = function () {
         return {
             apiKey: "",
-            mapOptions : {
+            mapOptions: {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 8
             },
 
             topRightComponent: null,
-            showPanel : true,
-            leafletLibs: [
-            ],
+            showPanel: true,
+            leafletLibs: [],
 
-            leafletLibCss: [
-            ]
+            leafletLibCss: [],
+            elements : []
         };
     };
 
-  
+
     /**
-     * 
+     *
      * @returns {undefined}
      */
-    namespace.mapComponent.prototype.init = function() {
+    namespace.mapComponent.prototype.init = function () {
         this.modules = {};
         this.layers = {};
         this.tiles = {};
-        this.elements = {
-        };
+        this.elements = {};
+        this.incrementalId = 1;
 
     };
 
-    namespace.mapComponent.prototype.getElement = function() {
+    namespace.mapComponent.prototype.getElement = function () {
         var self = this;
 
-        return app.service.ui.jsLoader.load(self.params.leafletLibs).then(function(){
+        return app.service.ui.jsLoader.load(self.params.leafletLibs).then(function () {
             return app.service.ui.cssLoader.load(self.params.leafletLibCss);
-        }).then(function(){
+        }).then(function () {
             self.leaflet = L;
-            setTimeout(function(){
+            setTimeout(function () {
                 self.init2();
             }, 10);
 
             return self.$element;
-        }).fail(function(){
+        }).fail(function () {
             console.error(arguments);
         });
     };
@@ -104,7 +101,7 @@
      *
      * @returns {undefined}
      */
-    namespace.mapComponent.prototype.init2 = function() {
+    namespace.mapComponent.prototype.init2 = function () {
 
         this.$rightPanel = this.$element.find("> div.right-panel");
         this.$map = this.$element.find("> div.map");
@@ -123,15 +120,16 @@
 
         this.leaflet.control.zoomBox({ //zoom
             modal: false,
-            className : "icon-search"
+            className: "icon-search"
         }).addTo(this.map);
 
 
-        for(var i in namespace.map.elements){
+        /*
+        for (var i in namespace.map.elements) {
             var element = new namespace.map.elements[i]();
             element.setContainer(this).init();
             this.elements[i] = element;
-        }
+        }*/
 
 
         this.params.tiles && this.setTiles(this.params.tiles);
@@ -139,16 +137,22 @@
         this.params.rightPanelComponent && this.setRightPanelComponent(this.params.rightPanelComponent);
         this.params.breadCrumbComponent && this.setBreadCrumbComponent(this.params.breadCrumbComponent);
         this.initEvents();
-        this.trigger("onMapReady");
 
+
+
+        var self = this;
+        this.params.elements.forEach(function(el){
+            self.add(el.layer, el.element);
+        });
+
+        this.trigger("onMapReady");
     };
 
 
-
-    namespace.mapComponent.prototype.setTiles = function(tiles){
+    namespace.mapComponent.prototype.setTiles = function (tiles) {
         var self = this;
         this.removeAllTiles();
-        tiles.forEach(function(tile){
+        tiles.forEach(function (tile) {
             self.addTile(tile);
         });
 
@@ -162,21 +166,21 @@
      * @param options
      * @returns {boolean}
      */
-    namespace.mapComponent.prototype.setMiniMap = function(tile, options){
+    namespace.mapComponent.prototype.setMiniMap = function (tile, options) {
         this._miniMap = new this.leaflet
             .Control
             .MiniMap(
-                this._renderTile(tile),
-                options
-            );
+            this._renderTile(tile),
+            options
+        );
 
         this._miniMap.addTo(this.map);
         return true;
     };
 
 
-    namespace.mapComponent.prototype.addTile = function(tile){
-        if(this.tiles[tile.id]){
+    namespace.mapComponent.prototype.addTile = function (tile) {
+        if (this.tiles[tile.id]) {
             return this;
         }
 
@@ -186,14 +190,14 @@
         return true;
     };
 
-    namespace.mapComponent.prototype._renderTile = function(tile){
+    namespace.mapComponent.prototype._renderTile = function (tile) {
         return this.leaflet
             .tileLayer(tile.url, tile.options);
     };
 
 
-    namespace.mapComponent.prototype.removeTile = function(id){
-        if(!this.tiles[id]){
+    namespace.mapComponent.prototype.removeTile = function (id) {
+        if (!this.tiles[id]) {
             return false;
         }
 
@@ -201,9 +205,9 @@
         return true;
     };
 
-    namespace.mapComponent.prototype.removeAllTiles = function(){
+    namespace.mapComponent.prototype.removeAllTiles = function () {
         var self = this;
-        Object.keys(this.tiles).forEach(function(id){
+        Object.keys(this.tiles).forEach(function (id) {
             self.removeTile(id);
         });
 
@@ -211,10 +215,10 @@
     };
 
 
-    namespace.mapComponent.prototype.initEvents = function() {
+    namespace.mapComponent.prototype.initEvents = function () {
         var self = this;
 
-        this.map.on('move', function() {
+        this.map.on('move', function () {
             self.trigger("onChange");
         });
 
@@ -229,17 +233,24 @@
     /**
      *
      */
-    namespace.mapComponent.prototype.showPanel = function(value) {
+    namespace.mapComponent.prototype.showPanel = function (value) {
         this.$element[value ? 'addClass' : 'removeClass']("panel-show");
+
+        var self = this;
+        for (var i = 0; i < 30; i++) {
+            setTimeout(function () {
+                self.map.invalidateSize();
+            }, i * 5);
+        }
         return this;
     };
 
-       namespace.mapComponent.prototype.isPanelShowed = function() {
+    namespace.mapComponent.prototype.isPanelShowed = function () {
         return this.$element.is(".panel-show");
     };
 
 
-    namespace.mapComponent.prototype.getBounds = function() {
+    namespace.mapComponent.prototype.getBounds = function () {
         var bounds = this.map.getBounds();
 
         return {
@@ -260,17 +271,17 @@
     };
 
 
-    namespace.mapComponent.prototype.centerToUserPosition = function() {
-        if(!navigator.geolocation){
+    namespace.mapComponent.prototype.centerToUserPosition = function () {
+        if (!navigator.geolocation) {
             return false;
         }
         var self = this;
         var deferred = Q.defer();
 
-        navigator.geolocation.getCurrentPosition(function(position){
+        navigator.geolocation.getCurrentPosition(function (position) {
             self.panTo({
-                lat : position.coords.latitude,
-                lng : position.coords.longitude
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
             });
             deferred.resolve(true);
         });
@@ -279,67 +290,172 @@
     };
 
 
-    namespace.mapComponent.prototype.panTo = function(data, options) {
+    namespace.mapComponent.prototype.panTo = function (data, options) {
         this.map.panTo(data, options);
         return true;
     };
 
-    namespace.mapComponent.prototype.getZoom = function() {
+
+
+    namespace.mapComponent.prototype.fitBounds = function (bounds, options) {
+        this.map.fitBounds(bounds, options);
+        return true;
+    };
+
+
+
+    namespace.mapComponent.prototype.getZoom = function () {
         return this.map.getZoom();
     };
 
-    namespace.mapComponent.prototype.setZoom = function(zoom, options) {
+    namespace.mapComponent.prototype.setZoom = function (zoom, options) {
         return this.map.setZoom(zoom, options);
     };
 
 
-    namespace.mapComponent.prototype.setMapOptions = function(options) {
+    namespace.mapComponent.prototype.setMapOptions = function (options) {
         this.map.setOptions(options);
         return true;
     };
 
 
+    namespace.mapComponent.prototype.add = function (layerName, elements) {
+        if(!elements.forEach){
+            elements = [];
+        }
 
+        var self = this;
 
+        elements.forEach(function(item){
+            self._add(layerName, item);
+        });
 
-    namespace.mapComponent.prototype.element = function(element, method){
-        if(!this.elements[element]){
-            console.error("Map: Undefined element "+element);
+        return this;
+    };
+
+    namespace.mapComponent.prototype._add = function (layerName, element) {
+        if (!namespace.map.elements[element.type]) {
+            console.error("Undefined element type " + element.type, element);
             return false;
         }
 
-        if(!this.elements[element][method]){
-            console.error("Map: Undefined method "+ method + " in "+element);
-            return false;
-        }
-
-
-        return this.elements[element][method].apply(
-            this.elements[element],
-            Array.prototype.splice.call(arguments, 2)
+        var el = new namespace.map.elements[element.type](
+            element.id,
+            element,
+            this.getLayer(layerName),
+            this
         );
+
+
+        el.__id = this.incrementalId++;
+        this.elements[el.__id] = el;
+        return el.create();
     };
 
 
+    namespace.mapComponent.prototype.remove = function (el) {
+        if(!el.__id){
+            return false;
+        }
 
-    namespace.mapComponent.prototype.setRightPanelComponent  = function(component){
+        if(this.elements[el.__id]){
+            delete this.elements[el.__id];
+        }
+        return true;
+    };
+
+    namespace.mapComponent.prototype.getLayer = function (layerName, element) {
+        if(this.layers[layerName]){
+            return this.layers[layerName];
+        }
+        this.layers[layerName] = this.leaflet.featureGroup();
+        this.layers[layerName].__name = layerName;
+
+        this.layers[layerName].addTo(this.map);
+        return this.layers[layerName];
+    };
+
+
+    namespace.mapComponent.prototype.execute = function (item) {
+        var promises = [];
+        this.getElements(item.selector).forEach(function(element){
+            item.calls.forEach(function(exec){
+                if(!element[exec.method]){
+                    console.error("Not found method "+ exec.method, exec);
+                    return false;
+                }
+                promises.push(element[exec.method].apply(element, exec.arguments));
+            });
+        });
+
+        return Q.all(promises);
+    };
+
+
+    namespace.mapComponent.prototype.getElements = function (selector) {
+        var result = [];
+        var el = null;
+        for(var i in this.elements){
+            el = this.elements[i];
+            if(this.checkSelector(el, selector)){
+                result.push(el);
+            }
+        }
+
+        return result;
+    };
+
+
+    namespace.mapComponent.prototype.checkSelector = function (el, selector) {
+        if(selector.id && selector.id != el.getId){
+            return false;
+        }
+
+        if(selector.inLayers){
+            if(selector.inLayers.indexOf(el.getLayer().__name) === -1){
+                return false;
+            }
+        }
+
+
+        if(selector.tags){
+            var tags = el.getTags();
+            for(var i in selector.tags){
+                if(tags.indexOf(selector.tags[i]) === -1){
+                    return false;
+                }
+            }
+        }
+
+        if(selector.notTags){
+            var tags = el.getTags();
+            for(var i in selector.notTags){
+                if(tags.indexOf(selector.notTags[i]) !== -1){
+                    return false;
+                }
+            }
+        }
+
+
+        return  true;
+    };
+
+
+    namespace.mapComponent.prototype.setRightPanelComponent = function (component) {
         var self = this;
-        return app.utils.buildComponent(component).then(function($html){
+        return app.utils.buildComponent(component).then(function ($html) {
             self.$rightPanel.find(".content:first").html($html);
             return true;
         });
     };
 
-    namespace.mapComponent.prototype.setBreadCrumbComponent  = function(component){
+    namespace.mapComponent.prototype.setBreadCrumbComponent = function (component) {
         var self = this;
-        return app.utils.buildComponent(component).then(function($html){
+        return app.utils.buildComponent(component).then(function ($html) {
             self.$breadcrumb.html($html);
             return true;
         });
     };
-
-
-
 
 
     return namespace.mapComponent;

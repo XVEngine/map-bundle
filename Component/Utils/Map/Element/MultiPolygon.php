@@ -16,10 +16,6 @@ class MultiPolygon extends AbstractElement
      */
     protected $polygons = [];
 
-    /**
-     * @var string
-     */
-    protected $title;
 
     /**
      * @author Krzysztof Bednarczyk
@@ -39,27 +35,6 @@ class MultiPolygon extends AbstractElement
         return $this->polygons;
     }
 
-    /**
-     * Get title value
-     * @author Krzysztof Bednarczyk
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set title value
-     * @author Krzysztof Bednarczyk
-     * @param string $title
-     * @return  $this
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
 
 
 
@@ -71,7 +46,15 @@ class MultiPolygon extends AbstractElement
     {
         return [
             "points" => $this->polygons,
-            "title" => $this->title
         ];
+    }
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public function getType()
+    {
+        return "multiPolygon";
     }
 }

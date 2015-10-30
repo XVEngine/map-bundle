@@ -16,4 +16,13 @@ class Rectangle  extends AbstractElement
     {
         // TODO: Implement export() method.
     }
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @return string
+     */
+    public function getType()
+    {
+        return "Rectangle";
+    }
 }
