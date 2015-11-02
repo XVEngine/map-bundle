@@ -143,5 +143,23 @@ xv-map {
       border-color: $main-color2;
       box-shadow: 10px 10px 5px 100vw rgba(0,0,0,0.75);
     }
+
+
+
+    .polygon-container {
+      width: 1px;
+      height: 1px;
+      position: relative;
+      pointer-events: none;
+      background: transparent !important;
+
+      >  .polygon-html {
+        position: absolute;
+        bottom: 100%;
+        left:0;
+        transform: translateX(-50%);
+      }
+    }
+
   }
 }

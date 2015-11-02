@@ -16,6 +16,10 @@ class MultiPolygon extends AbstractElement
      */
     protected $polygons = [];
 
+    /**
+     * @var string
+     */
+    protected $html;
 
     /**
      * @author Krzysztof Bednarczyk
@@ -36,6 +40,10 @@ class MultiPolygon extends AbstractElement
     }
 
 
+    public function setHtml($value = null){
+        $this->html = $value;
+        return $this;
+    }
 
 
     /**
@@ -46,6 +54,7 @@ class MultiPolygon extends AbstractElement
     {
         return [
             "points" => $this->polygons,
+            "html" => $this->html,
         ];
     }
 

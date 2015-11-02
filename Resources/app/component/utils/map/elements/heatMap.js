@@ -11,6 +11,7 @@
     namespace.heatMap.prototype.create = function(){
         var obj = new HeatmapOverlay(this.data.options);
         this.setObject(obj);
+        this.setData(this.data.data);
         this.data.show && this.show();
 
         return this;

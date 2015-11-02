@@ -18,8 +18,13 @@
             this.data.position,
             this.prepareOptions(this.data.options)
         );
+        obj.__element = this;
+
+
         this.setObject(obj);
+        this.setValue(this.data.options.clusterValue);
         this.data.show && this.show();
+
 
         var self = this;
         obj.on("click", function(){
@@ -30,6 +35,15 @@
 
     };
 
+    namespace.marker.prototype.getValue = function(){
+        return  typeof this._value === "undefined" ? 1 : this._value;
+    };
+
+
+    namespace.marker.prototype.setValue = function(value){
+         this._value = value;
+        return this;
+    };
 
     namespace.marker.prototype.prepareOptions = function(options){
         if(!options.icon){
@@ -63,13 +77,11 @@
                 iconCreateFunction: function (cluster) {
                     var value = 0;
                     cluster.getAllChildMarkers().forEach(function(marker){
-                        value += typeof marker.options.clusterValue === "undefined"
-                            ? 1 :
-                            marker.options.clusterValue;
+                        value +=    marker.__element.getValue();
                     });
 
                     return self.getLeaflet().divIcon({
-                        html: '<b>' + Math.round(value) + '</b>',
+                        html: '<b>' + Math.round(value, 2) + '</b>',
                         iconSize: [40, 40],
                         className: "map-cluster-marker"
                     });

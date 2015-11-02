@@ -42,6 +42,7 @@ class Marker  extends AbstractElement
 
 
 
+
     /**
      * @author Krzysztof Bednarczyk
      * @param float $lat
@@ -132,6 +133,7 @@ class Marker  extends AbstractElement
             "cluster" => $this->cluster,
         ];
     }
+
 
     /**
      * @author Krzysztof Bednarczyk

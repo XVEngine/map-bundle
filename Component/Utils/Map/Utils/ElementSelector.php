@@ -65,7 +65,7 @@ class ElementSelector extends AbstractElement
     public function off($eventName){
         parent::off($eventName);
         $this->calls[] = [
-            "method" => __METHOD__,
+            "method" => __FUNCTION__,
             "arguments" => func_get_args()
         ];
         return $this;
@@ -99,7 +99,7 @@ class ElementSelector extends AbstractElement
      */
     public function setTags($tags)
     {
-        return $this->__call(__METHOD__, func_get_args());
+        return $this->__call(__FUNCTION__, func_get_args());
     }
 
     /**
@@ -107,7 +107,7 @@ class ElementSelector extends AbstractElement
      */
     public function addTag($tag)
     {
-        return $this->__call(__METHOD__, func_get_args());
+        return $this->__call(__FUNCTION__, func_get_args());
     }
 
 
@@ -116,7 +116,7 @@ class ElementSelector extends AbstractElement
      */
     public function setOptions($options)
     {
-        return $this->__call(__METHOD__, func_get_args());
+        return $this->__call(__FUNCTION__, func_get_args());
     }
 
 
@@ -125,7 +125,7 @@ class ElementSelector extends AbstractElement
      */
     public function show($value = true)
     {
-        return $this->__call(__METHOD__, func_get_args());
+        return $this->__call(__FUNCTION__, func_get_args());
     }
 
 
@@ -138,6 +138,7 @@ class ElementSelector extends AbstractElement
     {
         return $this->export();
     }
+
 
 
 }
