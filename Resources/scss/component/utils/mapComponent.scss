@@ -16,10 +16,10 @@ xv-map {
       }
 
       &.right-panel {
-        right:0;
+        right: 0;
         > div {
           > .toggle a {
-            > i{
+            > i {
               transform: rotateY(180deg);
             }
           }
@@ -28,15 +28,14 @@ xv-map {
     }
   }
 
-
   > div {
     &.map {
       position: absolute;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      transition: all $animation-speed  ease;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: all $animation-speed ease;
 
       > .container {
         position: relative;
@@ -59,7 +58,7 @@ xv-map {
       border-left: 1px solid $border;
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
 
-      > div{
+      > div {
         position: relative;
         height: 100%;
         width: 100%;
@@ -69,12 +68,11 @@ xv-map {
           position: absolute;
           right: 100%;
           display: flex;
-          top: 10px;
+          top: 0;
 
           > .breadcrumb {
             height: 100%;
           }
-
 
           > a {
             flex: none;
@@ -82,16 +80,16 @@ xv-map {
             width: $toggle-size;
             height: 100%;
             background: $main-color;
-            color: $main-color2;
+            color: #FFF;
             font-size: 30px;
             text-align: center;
             border-right: 0;
-            box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.5);
+            box-shadow: -2px 2px 3px -1px rgba(0, 0, 0, 0.5);
 
             > i {
               display: inline-block;
               transition: all $animation-speed ease;
-              &:before{
+              &:before {
                 line-height: $toggle-size;
               }
             }
@@ -105,8 +103,6 @@ xv-map {
       }
     }
   }
-
-
 
   /**
   * Custom map elements styles
@@ -141,10 +137,8 @@ xv-map {
 
     .leaflet-zoom-box {
       border-color: $main-color2;
-      box-shadow: 10px 10px 5px 100vw rgba(0,0,0,0.75);
+      box-shadow: 10px 10px 5px 100vw rgba(0, 0, 0, 0.75);
     }
-
-
 
     .polygon-container {
       width: 1px;
@@ -153,13 +147,65 @@ xv-map {
       pointer-events: none;
       background: transparent !important;
 
-      >  .polygon-html {
+      > .polygon-html {
         position: absolute;
         bottom: 100%;
-        left:0;
+        left: 0;
         transform: translateX(-50%);
       }
     }
 
+    .leaflet-control-zoomslider {
+      > a {
+        background: $main-color;
+        color: #FFF;
+        border-radius: 0;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+      }
+
+      .leaflet-control-zoomslider-knob {
+        border-radius: 0;
+        width: 20px;
+        margin-left: -9px;
+      }
+    }
+
+    .leaflet-zoom-box-control {
+
+      &.active {
+        > a {
+          background: $main-color2;
+        }
+      }
+      a {
+        transition: all 0.3s ease;
+        border-radius: 0 !important;
+        width: 40px;
+        height: 40px;
+        background: $main-color;
+        color: #FFF;
+
+        &:before {
+          line-height: 40px;
+        }
+
+      }
+    }
+  }
+
+  > .panes {
+    position: absolute;
+
+    &.top-left {
+      top: 0;
+      left: 0;
+    }
+
+    &.bottom-left {
+      bottom: 0;
+      left: 0;
+    }
   }
 }

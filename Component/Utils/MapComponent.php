@@ -140,6 +140,25 @@ class MapComponent extends AbstractComponent
 
     /**
      * @author Krzysztof Bednarczyk
+     * @param AbstractComponent|null $component
+     * @return $this
+     */
+    public function setBottomLeftComponent(AbstractComponent $component = null){
+        return $this->setParam("bottomLeftComponent", $component);
+    }
+
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param AbstractComponent|null $component
+     * @return $this
+     */
+    public function setTopLeftComponent(AbstractComponent $component = null){
+        return $this->setParam("topLeftComponent", $component);
+    }
+
+
+    /**
+     * @author Krzysztof Bednarczyk
      * @param bool|true $value
      * @return $this
      */
@@ -156,7 +175,7 @@ class MapComponent extends AbstractComponent
      */
     public function add($layer, AbstractElement $element){
         $this->elements[] = [
-            "layeR" => $layer,
+            "layer" => $layer,
             "element" => $element
         ];
 

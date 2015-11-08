@@ -16,15 +16,16 @@
         var tmplString = app.utils.getString(function () {
             //@formatter:off
             /**<string>
-                    <xv-map>
+                    <xv-map class="event-insert">
                         <div class="map">
                             <div class="container"></div>
                         </div>
+                        <div class="panes bottom-left"></div>
+                        <div class="panes top-left"></div>
                         <div class="right-panel">
                             <div>
                                 <div class="toggle">
                                     <div class="breadcrumb">
-
                                     </div>
                                     <a href="#">
                                         <i class="icon icon-arrow-left"></i>
@@ -58,6 +59,8 @@
             },
 
             topRightComponent: null,
+            bottomLeftComponent: null,
+            topLeftComponent: null,
             showPanel: true,
             leafletLibs: [],
 
@@ -87,9 +90,11 @@
             return app.service.ui.cssLoader.load(self.params.leafletLibCss);
         }).then(function () {
             self.leaflet = L;
-            setTimeout(function () {
+
+            self.$element.one("event-insert", function(){
                 self.init2();
-            }, 10);
+            });
+
 
             return self.$element;
         }).fail(function () {
@@ -106,7 +111,7 @@
         this.$rightPanel = this.$element.find("> div.right-panel");
         this.$map = this.$element.find("> div.map");
         this.$breadcrumb = this.$element.find("> .right-panel > div > .toggle > div.breadcrumb");
-
+        this.$panes = this.$element.find("> .panes");
         this.$mapContainer = this.$map.find(" > div.container");
         this.$mapContainer.attr("id", app.utils.getRandomString(10));
         this.showPanel(this.params.showPanel);
@@ -136,6 +141,9 @@
         this.params.miniMap && this.setMiniMap(this.params.miniMap.tile, this.params.miniMap.options);
         this.params.rightPanelComponent && this.setRightPanelComponent(this.params.rightPanelComponent);
         this.params.breadCrumbComponent && this.setBreadCrumbComponent(this.params.breadCrumbComponent);
+        this.params.bottomLeftComponent && this.setBottomLeftComponent(this.params.bottomLeftComponent);
+        this.params.topLeftComponent && this.setTopLeftComponent(this.params.topLeftComponent);
+
         this.initEvents();
 
 
@@ -222,6 +230,11 @@
             self.trigger("onChange");
         });
 
+
+
+        this.$element.on("event-insert", function(){
+
+        });
 
         this.$rightPanel.find(".toggle > a:first").on("click", function () {
             self.showPanel(!self.isPanelShowed());
@@ -452,6 +465,22 @@
         var self = this;
         return app.utils.buildComponent(component).then(function ($html) {
             self.$rightPanel.find(".content:first").html($html);
+            return true;
+        });
+    };
+
+    namespace.mapComponent.prototype.setBottomLeftComponent = function (component) {
+        var self = this;
+        return app.utils.buildComponent(component).then(function ($html) {
+            self.$panes.filter(".bottom-left").html($html);
+            return true;
+        });
+    };
+
+    namespace.mapComponent.prototype.setTopLeftComponent = function (component) {
+        var self = this;
+        return app.utils.buildComponent(component).then(function ($html) {
+            self.$panes.filter(".top-left").html($html);
             return true;
         });
     };
