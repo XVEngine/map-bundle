@@ -18,10 +18,13 @@
             /**<string>
                     <xv-map class="event-insert">
                         <div class="map">
-                            <div class="container"></div>
+                            <div class="container">
+                                <div class="view"></div>
+                                <div class="panes bottom-left"></div>
+                                <div class="panes top-left"></div>
+                                <div class="panes bottom"></div>
+                            </div>
                         </div>
-                        <div class="panes bottom-left"></div>
-                        <div class="panes top-left"></div>
                         <div class="right-panel">
                             <div>
                                 <div class="toggle">
@@ -111,8 +114,8 @@
         this.$rightPanel = this.$element.find("> div.right-panel");
         this.$map = this.$element.find("> div.map");
         this.$breadcrumb = this.$element.find("> .right-panel > div > .toggle > div.breadcrumb");
-        this.$panes = this.$element.find("> .panes");
-        this.$mapContainer = this.$map.find(" > div.container");
+        this.$panes = this.$map.find("> .container > .panes");
+        this.$mapContainer = this.$map.find(" > div.container > div.view");
         this.$mapContainer.attr("id", app.utils.getRandomString(10));
         this.showPanel(this.params.showPanel);
 
@@ -143,6 +146,7 @@
         this.params.breadCrumbComponent && this.setBreadCrumbComponent(this.params.breadCrumbComponent);
         this.params.bottomLeftComponent && this.setBottomLeftComponent(this.params.bottomLeftComponent);
         this.params.topLeftComponent && this.setTopLeftComponent(this.params.topLeftComponent);
+        this.params.bottomComponent && this.setBottomComponent(this.params.bottomComponent);
 
         this.initEvents();
 
@@ -484,6 +488,15 @@
             return true;
         });
     };
+
+    namespace.mapComponent.prototype.setBottomComponent = function (component) {
+        var self = this;
+        return app.utils.buildComponent(component).then(function ($html) {
+            self.$panes.filter(".bottom").html($html);
+            return true;
+        });
+    };
+
 
     namespace.mapComponent.prototype.setBreadCrumbComponent = function (component) {
         var self = this;

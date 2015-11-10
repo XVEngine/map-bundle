@@ -19,6 +19,7 @@
 
     namespace.heatMap.prototype.setData = function(data){
         this.getObject().setData(data);
+        this.getObject()._draw();
         return this;
     };
 

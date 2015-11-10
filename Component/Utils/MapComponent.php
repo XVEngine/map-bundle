@@ -156,6 +156,15 @@ class MapComponent extends AbstractComponent
         return $this->setParam("topLeftComponent", $component);
     }
 
+    /**
+     * @author Krzysztof Bednarczyk
+     * @param AbstractComponent|null $component
+     * @return $this
+     */
+    public function setBottomComponent(AbstractComponent $component = null){
+        return $this->setParam("bottomComponent", $component);
+    }
+
 
     /**
      * @author Krzysztof Bednarczyk
