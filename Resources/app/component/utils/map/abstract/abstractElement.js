@@ -114,8 +114,7 @@
 
 
     namespace.abstractElement.prototype.getTags = function(){
-        this._tags = tags;
-        return this;
+        return this._tags;
     };
 
 
