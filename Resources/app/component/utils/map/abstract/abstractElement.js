@@ -18,7 +18,7 @@
         this.layer = layer;
         this.container = container;
         this.__object = null;
-        this._tags = [];
+        this._tags = data.tags || [];
         this.setEvents(data.events);
     };
 
